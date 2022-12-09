@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ShapeProcessor.Shapes {
 
@@ -39,6 +41,14 @@ public class Triangle : IShape {
 
         // Heron's formula
         return Math.Sqrt(p * (p - A) * (p - B) * (p - C));
+    }
+
+    public bool IsRightTriangle {
+        get {
+            var sideLengths = new List<double> { A, B, C }.OrderBy(x => x).ToList();
+            // NOTE: possible loss of precision
+            return Math.Pow(sideLengths[2], 2) == Math.Pow(sideLengths[0], 2) + Math.Pow(sideLengths[1], 2);
+        }
     }
 }
 }
