@@ -8,6 +8,7 @@ public class Triangle : IShape {
     public double A { get; }
     public double B { get; }
     public double C { get; }
+    private readonly List<double> _sideLengths;
 
     public Triangle(double a, double b, double c) {
         CheckForNegativeOrZero(a);
@@ -21,6 +22,7 @@ public class Triangle : IShape {
         A = a;
         B = b;
         C = c;
+        _sideLengths = new List<double> { A, B, C }.OrderBy(x => x).ToList();
     }
 
     private static void CheckForNegativeOrZero(double x) {
@@ -43,12 +45,8 @@ public class Triangle : IShape {
         return Math.Sqrt(p * (p - A) * (p - B) * (p - C));
     }
 
-    public bool IsRightTriangle {
-        get {
-            var sideLengths = new List<double> { A, B, C }.OrderBy(x => x).ToList();
-            // NOTE: possible loss of precision
-            return Math.Pow(sideLengths[2], 2) == Math.Pow(sideLengths[0], 2) + Math.Pow(sideLengths[1], 2);
-        }
-    }
+    public bool IsRightTriangle =>
+        // NOTE: possible loss of precision
+        Math.Pow(_sideLengths[2], 2) == Math.Pow(_sideLengths[0], 2) + Math.Pow(_sideLengths[1], 2);
 }
 }
