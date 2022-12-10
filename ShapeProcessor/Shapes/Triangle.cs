@@ -8,7 +8,8 @@ public class Triangle : IShape {
     public double A { get; }
     public double B { get; }
     public double C { get; }
-    private readonly List<double> _sideLengths;
+    public double Square { get; }
+    public bool IsRightTriangle { get; }
 
     public Triangle(double a, double b, double c) {
         CheckForNegativeOrZero(a);
@@ -22,7 +23,12 @@ public class Triangle : IShape {
         A = a;
         B = b;
         C = c;
-        _sideLengths = new List<double> { A, B, C }.OrderBy(x => x).ToList();
+
+        Square = GetSquare();
+
+        var sideLengths = new List<double> { A, B, C }.OrderBy(x => x).ToList();
+        // NOTE: possible loss of precision
+        IsRightTriangle = Math.Pow(sideLengths[2], 2) == Math.Pow(sideLengths[0], 2) + Math.Pow(sideLengths[1], 2);
     }
 
     private static void CheckForNegativeOrZero(double x) {
@@ -37,16 +43,12 @@ public class Triangle : IShape {
         }
     }
 
-    public double GetSquare() {
+    private double GetSquare() {
         // semiPerimeter
         var p = (A + B + C) / 2;
 
         // Heron's formula
         return Math.Sqrt(p * (p - A) * (p - B) * (p - C));
     }
-
-    public bool IsRightTriangle =>
-        // NOTE: possible loss of precision
-        Math.Pow(_sideLengths[2], 2) == Math.Pow(_sideLengths[0], 2) + Math.Pow(_sideLengths[1], 2);
 }
 }

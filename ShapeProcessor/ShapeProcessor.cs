@@ -1,12 +1,12 @@
 ﻿namespace ShapeProcessor {
 
 public interface IShape {
-    double GetSquare();
+    double Square { get; }
 }
 
 public static class ShapeProcessor {
     public static double GetSquare(IShape shape) {
-        return shape.GetSquare();
+        return shape.Square;
     }
 }
 }

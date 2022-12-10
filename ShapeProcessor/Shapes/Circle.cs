@@ -4,6 +4,7 @@ namespace ShapeProcessor.Shapes {
 
 public class Circle : IShape {
     public double Radius { get; }
+    public double Square { get; }
 
     public Circle(double radius) {
         if (radius <= 0) {
@@ -11,10 +12,7 @@ public class Circle : IShape {
         }
 
         Radius = radius;
-    }
-
-    public double GetSquare() {
-        return Math.PI * Math.Pow(Radius, 2);
+        Square = Math.PI * Math.Pow(Radius, 2);
     }
 }
 }
